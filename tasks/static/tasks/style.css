@@ -1,0 +1,178 @@
+/* Подключаем шрифт с японским характером (без засечек, чистый) */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700&display=swap');
+
+body {
+    background-color: #F9F7F2; /* Цвет традиционной бумаги */
+    font-family: 'Noto Sans JP', sans-serif;
+    color: #2D2D2D;
+    line-height: 1.6;
+}
+
+/* Карточки задач — стиль "Минимализм" */
+.task-card {
+    background: transparent !important;
+    border: none !important;
+    border-bottom: 1px solid #E0DED7 !important; /* Тонкая линия разделения */
+    margin-bottom: 0;
+    padding: 20px 10px;
+    transition: background 0.3s ease;
+}
+
+.task-card:hover {
+    background-color: #F2F0E9 !important; /* Легкий оттенок при наведении */
+}
+
+/* Статистика в стиле "Дзен" */
+.stat-card {
+    background: transparent;
+    border: 1px solid #2D2D2D; /* Тонкая черная рамка */
+    border-radius: 0; /* Японский дизайн часто предпочитает прямые углы */
+    padding: 15px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.8rem;
+}
+
+/* Кнопки — строгие и четкие */
+.btn-primary {
+    background-color: #2D2D2D !important;
+    color: #F9F7F2 !important;
+    border: none;
+    border-radius: 0;
+    padding: 10px 25px;
+    font-weight: 300;
+    letter-spacing: 1px;
+}
+
+.btn-primary:hover {
+    background-color: #4A4A4A !important;
+    transform: none;
+}
+
+/* Поиск */
+.form-control {
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #2D2D2D;
+    border-radius: 0;
+    padding-left: 0;
+}
+
+.form-control:focus {
+    box-shadow: none;
+    border-bottom: 2px solid #2D2D2D;
+}
+/* Японский бейдж категории */
+.jp-category-tag {
+    border: 1px solid #2D2D2D;
+    color: #2D2D2D;
+    padding: 2px 8px;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Статус задачи */
+.jp-badge-active {
+    color: #8B9467; /* Цвет бамбука */
+    font-size: 0.9rem;
+}
+
+.jp-badge-completed {
+    color: #A0A0A0;
+    font-size: 0.9rem;
+}
+
+/* Кнопки действий ссылками */
+.btn-jp-action {
+    font-size: 0.75rem;
+    text-decoration: none;
+    color: #2D2D2D;
+    margin-left: 15px;
+    border-bottom: 1px solid transparent;
+    transition: 0.3s;
+}
+
+.btn-jp-action:hover {
+    border-bottom: 1px solid #2D2D2D;
+}
+
+/* Общий стиль карточки */
+.task-card {
+    border-bottom: 1px solid #E0DED7;
+    padding: 25px 0;
+    transition: all 0.4s ease;
+}
+
+.task-card:hover {
+    padding-left: 10px; /* Эффект легкого сдвига */
+}
+.task-card {
+    border: 1px solid #E0DED7 !important;
+    margin-bottom: 15px;
+    background: white !important;
+    box-shadow: 5px 5px 0px #E0DED7; /* Жесткая тень в стиле минимализма */
+}
+body {
+    background: 
+        linear-gradient(rgba(249, 247, 242, 0.85), rgba(249, 247, 242, 0.85)), /* Полупрозрачный слой для читаемости */
+        url('https://images.unsplash.com/photo-1522383225653-ed111181a951?q=80&w=2076&auto=format&fit=crop') no-repeat center center fixed;
+    background-size: cover;
+    min-height: 100vh;
+    overflow-x: hidden; /* Чтобы лепестки не создавали горизонтальную прокрутку */
+}
+
+/* Сделаем карточки чуть прозрачными (Glassmorphism), чтобы они не перекрывали красоту фона */
+.task-card, .stat-card {
+    background: rgba(255, 255, 255, 0.7) !important;
+    backdrop-filter: blur(5px);
+}
+/* Основной готический шрифт для заголовков */
+h1, .stat-card h2, .display-3 {
+    font-family: 'UnifrakturMaguntia', serif;
+    letter-spacing: 2px;
+}
+
+/* Новый дизайн контейнеров статистики */
+.stat-card {
+    background: rgba(255, 255, 255, 0.6) !important;
+    border: 1px solid #2D2D2D !important;
+    border-radius: 0 !important; /* Прямые углы для строгости */
+    position: relative;
+    padding: 20px 10px !important;
+    transition: 0.4s;
+}
+
+/* Эффект "уголков" для контейнеров (как в старинных рамках) */
+.stat-card::before {
+    content: "";
+    position: absolute;
+    top: 5px; left: 5px; right: 5px; bottom: 5px;
+    border: 1px solid rgba(45, 45, 45, 0.2);
+    pointer-events: none;
+}
+
+.stat-card:hover {
+    background: rgba(252, 228, 236, 0.8) !important; /* Цвет сакуры при наведении */
+    transform: translateY(-5px);
+}
+
+.stat-card h6 {
+    font-family: 'Noto Sans JP', sans-serif;
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    letter-spacing: 3px;
+    color: #555 !important;
+}
+.task-card {
+    border: none !important;
+    border-bottom: 1px double #2D2D2D !important; /* Двойная линия в готическом стиле */
+    background: transparent !important;
+    padding: 25px 15px !important;
+}
+
+.task-card .h5 {
+    font-family: 'UnifrakturMaguntia', serif;
+    font-size: 1.6rem;
+    color: #1a1a1a;
+}

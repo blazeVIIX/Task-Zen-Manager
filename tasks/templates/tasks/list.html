@@ -1,0 +1,116 @@
+{% extends 'tasks/base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-5" style="animation: fadeInUp 0.8s ease;">
+    <h1 class="fw-light text-uppercase" style="letter-spacing: 4px; color: #2D2D2D;">Список Дел</h1>
+    <a href="{% url 'task_create' %}" class="btn btn-primary px-4 shadow-sm">+ Добавить</a>
+</div>
+
+<div class="row mb-5 g-3">
+    {% for label, value, color in statistics %}
+    {% endfor %}
+    <div class="col-6 col-md-3">
+        <div class="stat-card text-center">
+            <div class="small text-uppercase" style="letter-spacing: 1px;">Всего</div>
+            <div class="h3 fw-bold mt-2">{{ total }}</div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="stat-card text-center">
+            <div class="small text-uppercase" style="letter-spacing: 1px;">Готово</div>
+            <div class="h3 fw-bold mt-2 text-dark">{{ completed }}</div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="stat-card text-center">
+            <div class="small text-uppercase" style="letter-spacing: 1px;">В работе</div>
+            <div class="h3 fw-bold mt-2">{{ uncompleted }}</div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="stat-card text-center" style="border-color: #d9534f;">
+            <div class="small text-uppercase" style="letter-spacing: 1px; color: #d9534f;">Срочно</div>
+            <div class="h3 fw-bold mt-2" style="color: #d9534f;">{{ overdue }}</div>
+        </div>
+    </div>
+</div>
+
+<div class="tasks-container">
+    {% for task in tasks %}
+    <div class="task-card d-flex justify-content-between align-items-center">
+        <div class="d-flex align-items-center">
+            <a href="{% url 'task_toggle' task.pk %}" class="me-4 text-decoration-none">
+                {% if task.completed %}
+                    <span class="jp-badge-completed">● Готово</span>
+                {% else %}
+                    <span class="jp-badge-active">○ В работе</span>
+                {% endif %}
+            </a>
+
+            <div>
+                <span class="h5 fw-normal {% if task.completed %}text-muted text-decoration-line-through{% endif %}" style="color: #2D2D2D;">
+                    {{ task.title }}
+                </span>
+                
+                <div class="mt-1">
+                    {% if task.category %}
+                        <span class="jp-category-tag">{{ task.category.name }}</span>
+                    {% endif %}
+                    <span class="text-muted small ms-2">{{ task.description|truncatechars:40 }}</span>
+                </div>
+
+                {% if task.due_date %}
+                <div class="mt-2 small">
+                    <span class="{% if task.due_date < now and not task.completed %}text-danger{% else %}text-muted{% endif %}">
+                        / {{ task.due_date|date:"d.m.y" }} /
+                    </span>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        
+        <div class="action-buttons">
+            <a href="{% url 'task_update' task.pk %}" class="btn-jp-action">Редактировать</a>
+            <a href="{% url 'task_delete' task.pk %}" class="btn-jp-action text-danger">Удалить</a>
+        </div>
+    </div>
+    {% empty %}
+    <p class="text-center text-muted mt-5 fw-light italic">Пусто, как в саду камней...</p>
+    {% endfor %}
+</div>
+{% endblock %}
+
+<a href="{% url 'task_toggle' task.pk %}" 
+   onclick="const a=document.getElementById('success-sound'); a.play();" 
+   class="text-decoration-none me-3">
+    {% if task.completed %}
+        <span class="jp-badge-completed">● Готово</span>
+    {% else %}
+        <span class="jp-badge-active">○ В работе</span>
+    {% endif %}
+</a>
+
+<script>
+document.addEventListener('click', function() {
+    // Этот пустой слушатель «разблокирует» звук для браузера после первого клика
+    console.log("Звук разблокирован");
+}, { once: true });
+
+function playSuccessSound() {
+    const audio = document.getElementById('success-sound');
+    if (audio) {
+        console.log("Пытаюсь воспроизвести звук...");
+        audio.currentTime = 0; // Сброс на начало
+        audio.play().catch(error => {
+            console.error("Ошибка воспроизведения:", error);
+        });
+    } else {
+        console.error("Элемент audio не найден!");
+    }
+}
+
+// Если в адресе страницы есть слово 'toggle', играем звук сразу
+if (window.location.href.indexOf('toggle') > -1) {
+    setTimeout(playSuccessSound, 100);
+}
+</script>

@@ -1,0 +1,76 @@
+{% extends 'tasks/base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row min-vh-75 align-items-center justify-content-center text-center py-5">
+        <div class="col-lg-8" style="animation: fadeInUp 1s ease-out;">
+            <div class="display-1 mb-4 floating">🚀</div>
+            
+            <h1 class="display-3 fw-bold mb-3 shadow-text">Управляй задачами мастерски</h1>
+            <p class="lead text-muted mb-5 px-md-5">
+                Твой персональный помощник для достижения целей. Планируй, отслеживай прогресс и не пропускай дедлайны в один клик.
+            </p>
+
+            <div class="d-grid gap-3 d-sm-flex justify-content-sm-center mb-5">
+                <a href="{% url 'register' %}" class="btn btn-primary btn-lg px-5 py-3 shadow-lg pulse-button">
+                    Начать сейчас — бесплатно
+                </a>
+                <a href="{% url 'login' %}" class="btn btn-outline-dark btn-lg px-5 py-3">
+                    Уже есть аккаунт?
+                </a>
+            </div>
+
+            <div class="row g-4 mt-4 text-start">
+                <div class="col-md-4">
+                    <div class="stat-card">
+                        <h5>✅ Простота</h5>
+                        <small>Интуитивный интерфейс, понятный с первой секунды.</small>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="stat-card">
+                        <h5>📊 Статистика</h5>
+                        <small>Наглядные счетчики твоей продуктивности.</small>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="stat-card">
+                        <h5>⏰ Дедлайны</h5>
+                        <small>Умная подсветка задач, которые требуют внимания.</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .min-vh-75 { min-height: 75vh; }
+    
+    .shadow-text {
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    }
+
+    /* Анимация парения ракеты */
+    .floating {
+        animation: floating 3s ease-in-out infinite;
+    }
+
+    @keyframes floating {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-20px); }
+        100% { transform: translateY(0px); }
+    }
+
+    /* Анимация кнопки */
+    .pulse-button:hover {
+        animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+        0% { box-shadow: 0 0 0 0 rgba(78, 115, 223, 0.7); }
+        70% { box-shadow: 0 0 0 15px rgba(78, 115, 223, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(78, 115, 223, 0); }
+    }
+</style>
+{% endblock %}

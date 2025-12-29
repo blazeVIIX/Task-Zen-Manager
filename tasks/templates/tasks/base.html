@@ -1,0 +1,115 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Менеджер Задач</title>
+    <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Noto+Sans+JP:wght@300;400&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'tasks/style.css' %}">
+</head>
+<body class="bg-light">
+    <div id="sakura-container"></div>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'task_list' %}">Task Zen Manager</a>
+        <div class="navbar-nav ms-auto">
+            {% if user.is_authenticated %}
+                <span class="nav-item nav-link text-light me-3">Привет, {{ user.username }}!</span>
+                <form action="{% url 'logout' %}" method="post" class="d-inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline-light btn-sm">Выйти</button>
+                </form>
+            {% else %}
+                <a class="nav-item nav-link" href="{% url 'login' %}">Вход</a>
+                <a class="nav-item nav-link text-white fw-bold" href="{% url 'register' %}">Регистрация</a>
+            {% endif %}
+        </div>
+    </div>
+</nav>
+
+    <div class="container">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+<audio id="success-sound" preload="auto">
+    <source src="{% static 'tasks/sounds/success.mp3' %}" type="audio/mpeg">
+</audio>
+
+<script>
+function createPetal() {
+    const container = document.getElementById('sakura-container');
+    const petal = document.createElement('span');
+    
+    // Настройки лепестка
+    const size = Math.random() * 10 + 10 + 'px';
+    petal.style.width = size;
+    petal.style.height = size;
+    petal.style.left = Math.random() * 100 + 'vw';
+    petal.style.animationDuration = Math.random() * 3 + 7 + 's'; // Длительность падения
+    petal.style.opacity = Math.random() * 0.5 + 0.3;
+    
+    // Выбираем случайный символ лепестка (можно просто розовый круг)
+    petal.innerHTML = '🌸';
+    petal.classList.add('petal');
+    
+    container.appendChild(petal);
+    
+    // Удаляем лепесток после завершения анимации
+    setTimeout(() => {
+        petal.remove();
+    }, 10000);
+}
+
+// Создаем лепесток каждые 400мс
+setInterval(createPetal, 400);
+</script>
+
+<style>
+.petal {
+    position: fixed;
+    top: -50px;
+    user-select: none;
+    pointer-events: none;
+    z-index: 9999;
+    animation-name: fall;
+    animation-timing-function: linear;
+}
+
+@keyframes fall {
+    0% {
+        transform: translateY(0) rotate(0deg) translateX(0);
+    }
+    100% {
+        transform: translateY(110vh) rotate(720deg) translateX(100px);
+    }
+}
+</style>
+
+<script>
+    // 1. Когда пользователь кликает на "Готово", ставим метку в память браузера
+    document.querySelectorAll('a[href*="toggle"]').forEach(link => {
+        link.addEventListener('click', () => {
+            localStorage.setItem('task_done_sound', 'true');
+        });
+    });
+
+    // 2. При загрузке страницы проверяем: если метка есть — играем звук
+    window.addEventListener('load', () => {
+        if (localStorage.getItem('task_done_sound') === 'true') {
+            const audio = document.getElementById('success-sound');
+            if (audio) {
+                audio.currentTime = 0;
+                audio.play();
+            }
+            // Стираем метку, чтобы звук не орал при каждом обновлении
+            localStorage.removeItem('task_done_sound');
+        }
+    });
+</script>
+
+</body>
+</html>
